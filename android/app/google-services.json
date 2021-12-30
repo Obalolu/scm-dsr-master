@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "943015557595",
+    "project_id": "scm-dsr-dc5cb",
+    "storage_bucket": "scm-dsr-dc5cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943015557595:android:82f9e26100bd7a7cbb0ffe",
+        "android_client_info": {
+          "package_name": "com.scm_dsr.devotional"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943015557595-57dkp6bap3a0q42mgs377fef3d4vmpq1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scm_dsr.devotional",
+            "certificate_hash": "ea866f16c55332cf9e084d66b1112a56afe4e921"
+          }
+        },
+        {
+          "client_id": "943015557595-d2pbgmn3uhokiq6pmq29sb4va1d05913.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9x8zRwITtnsIg_6_R3hkKH4Gp3Yu2VWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943015557595-d2pbgmn3uhokiq6pmq29sb4va1d05913.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
