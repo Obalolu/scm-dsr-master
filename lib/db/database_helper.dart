@@ -240,7 +240,7 @@ class DatabaseHelper {
         '30',
         '31'
       ];
-      String date = '2021-${monthVariables[monthIndex][0]}${dayVariables[i]}';
+      String date = '${DateTime.now().year}-${monthVariables[monthIndex][0]}${dayVariables[i]}';
       print(date);
       final singleDevotionals = await db.query(devotionalTable,
           columns: [topic, bibleText, day],

@@ -17,7 +17,7 @@ class APIService {
   String username;
   String email;
   String password;
-  String url = "https://scmdsr-staging.herokuapp.com/devotional-years/?year=2021";
+  String url = "https://scmdsr-staging.herokuapp.com/devotional-years/?year=${DateTime.now().year}";
   String tokenUrl = "https://scmdsr-staging.herokuapp.com/auth/local";
   String registerUrl = "https://scmdsr-staging.herokuapp.com/auth/local/register";
   String loginUrl;

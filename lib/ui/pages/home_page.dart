@@ -8,6 +8,7 @@ import 'package:devotional/ui/widgets/devotional.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:new_version/new_version.dart';
 
 import 'all_devotionals.dart';
 
@@ -18,6 +19,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var newFormat = DateFormat("yyyy-MM-dd");
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    _checkVersion();
+  }
+
+  void _checkVersion() async{
+    final newVersion = NewVersion(
+      androidId: 'com.scm_dsr.devotional',  
+        context: context,
+    );
+    newVersion.showAlertIfNecessary();
+  }
 
   Future<String> queryUsername() async {
     var user = await DatabaseHelper.instance.queryUser();
@@ -330,6 +347,9 @@ class _HomePageState extends State<HomePage> {
                           break;
                       }
                       List<Map<String, dynamic>> item = snapshot.data;
+                      if (item.isEmpty) {
+                        print('Empty');
+                      }
 
                       return Column(
                         children: [

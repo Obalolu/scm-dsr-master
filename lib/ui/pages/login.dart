@@ -82,9 +82,9 @@ class _LoginPageState extends State<LoginPage> {
       decoration: InputDecoration(
           suffixIcon: IconButton(
             onPressed: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
             },
             icon: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
