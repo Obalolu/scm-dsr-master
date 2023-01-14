@@ -1,6 +1,7 @@
 import 'package:devotional/db/database_helper.dart';
 import 'package:devotional/models/devotional_model.dart';
 import 'package:devotional/ui/widgets/devotional.dart';
+import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
@@ -50,7 +51,23 @@ class _DevotionalListState extends State<DevotionalList> {
             default:
             // Completed with error
               if (snapshot.hasError) {
-                return Container(child: Text(snapshot.error.toString()));
+                return Center(
+                  child: EmptyWidget(
+                    image: null,
+                    packageImage: PackageImage.Image_1,
+                    title: 'Something Went Wrong',
+                    subTitle: 'Unable to get devotionals',
+                    titleTextStyle: TextStyle(
+                      fontSize: 22,
+                      color: Color(0xff9da9c7),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    subtitleTextStyle: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xffabb8d6),
+                    ),
+                  ),
+                );;
               }
               List<Devotional> list = snapshot.data;
               print(list.length);

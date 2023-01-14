@@ -4,6 +4,8 @@ import 'package:devotional/ui/widgets/rate_app_init_widget.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 
+import 'ui/pages/home.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -48,10 +50,10 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Colors.blue[700],
         ),
         routes: <String, WidgetBuilder>{
-          '/': (BuildContext context) => PaymentPage(),
-          '/confirm_payment': (BuildContext context) =>
+          // '/': (BuildContext context) => PaymentPage(),
+          '/': (BuildContext context) =>
               RateAppInitWidget(
-                builder: (rateMyApp) => InsertDevotionals(rateMyApp: rateMyApp),
+                builder: (rateMyApp) => Home(rateMyApp: rateMyApp),
               ),
         },
       );

@@ -17,7 +17,7 @@ class APIService {
   String username;
   String email;
   String password;
-  String url = "https://scmdsr-staging.herokuapp.com/devotional-years/?year=${DateTime.now().year}";
+  String url = "https://scmdsr-staging.herokuapp.com/devotional-years/?year=2022";
   String tokenUrl = "https://scmdsr-staging.herokuapp.com/auth/local";
   String registerUrl = "https://scmdsr-staging.herokuapp.com/auth/local/register";
   String loginUrl;
@@ -45,7 +45,7 @@ class APIService {
       }
 
       _returnString = await login(loginDetails);
-      print(_returnString);
+      print("result: $_returnString");
 
       if (_returnString != '') {
         return _returnString;
@@ -135,6 +135,8 @@ class APIService {
           return returnString;
         }
         return 'username/email or password is incorrect';
+      } else {
+        return 'Unable to connect to server';
       }
     } on SocketException catch (e) {
       print('CATCH catch: ${e.toString()}.');

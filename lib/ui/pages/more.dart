@@ -44,11 +44,11 @@ class _MoreState extends State<More> {
               }
 
               final user = snapshot.data;
-              String initials = user['username'][0].toUpperCase();
-              String username = user['username'];
-              String email = user['email'];
-              int reminder = user['reminder'];
-              int reminderTime = user['reminderTime'];
+              // String initials = user['username'][0].toUpperCase();
+              // String username = user['username'];
+              // String email = user['email'];
+              // int reminder = user['reminder'];
+              // int reminderTime = user['reminderTime'];
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,7 +63,7 @@ class _MoreState extends State<More> {
                     child: CircleAvatar(
                       backgroundColor: Colors.blue[700],
                       child: Text(
-                        initials,
+                        'U',
                         style: TextStyle(
                             fontSize: 32,
                             color: Colors.white,
@@ -74,20 +74,20 @@ class _MoreState extends State<More> {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    username,
+                    'User',
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
                         fontWeight: FontWeight.normal
                     ),
                   ),
-                  Text(
-                    email,
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal
-                    ),
-                  ),
+                  // Text(
+                  //   email,
+                  //   style: TextStyle(
+                  //       fontSize: 16,
+                  //       fontWeight: FontWeight.normal
+                  //   ),
+                  // ),
                   SizedBox(height: 24),
                   Expanded(
                     child: SettingsList(

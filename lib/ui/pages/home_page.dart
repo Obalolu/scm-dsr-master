@@ -5,6 +5,7 @@ import 'package:devotional/db/database_helper.dart';
 import 'package:devotional/models/devotional_model.dart';
 import 'package:devotional/ui/pages/bible_study_page.dart';
 import 'package:devotional/ui/widgets/devotional.dart';
+import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
@@ -310,7 +311,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        '${greeting()} $username',
+                        (username != null) ? '${greeting()} $username' : '${greeting()}',
                         style: TextStyle(
                           fontFamily: 'Inder',
                           fontSize: 18,
@@ -347,76 +348,139 @@ class _HomePageState extends State<HomePage> {
                           break;
                       }
                       List<Map<String, dynamic>> item = snapshot.data;
-                      if (item.isEmpty) {
-                        print('Empty');
+
+
+                      if (item != null) {
+                        if (item.isEmpty) {
+                          print('Empty');
+                        }
+                        return Column(
+                          children: [
+                            CarouselSlider.builder(
+                              itemCount: item.length,
+                              options: CarouselOptions(
+                                viewportFraction: 0.8,
+                                initialPage: item.indexWhere((element) =>
+                                element['Day'] ==
+                                    newFormat.format(DateTime.now())),
+                                aspectRatio: 6.5 / 3,
+                                enableInfiniteScroll: false,
+                                reverse: false,
+                                autoPlay: false,
+                                enlargeCenterPage: true,
+                                scrollDirection: Axis.horizontal,
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Card(
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DevotionalWidget(
+                                                      title: 'Devotional',
+                                                      day: item[index]['Day'],
+                                                    )));
+                                      });
+                                    },
+                                    child: devotionalCarousel(index, item),
+                                  ),
+                                );
+                              },
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AllDevotionals()));
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'See all devotionals',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.blue[700],
+                                      fontFamily: 'Inder',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Icon(Icons.arrow_forward,
+                                      color: Colors.blue[700]),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          children: [
+                            CarouselSlider.builder(
+                              itemCount: 1,
+                              options: CarouselOptions(
+                                viewportFraction: 0.8,
+                                aspectRatio: 6.5 / 3,
+                                enableInfiniteScroll: false,
+                                reverse: false,
+                                autoPlay: false,
+                                enlargeCenterPage: true,
+                                scrollDirection: Axis.horizontal,
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Card(
+                                  child: Center(
+                                    child: Text(
+                                      'No Devotionals Available',
+                                      style: TextStyle(
+                                        fontFamily: 'Inder',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AllDevotionals()));
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'See all devotionals',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.blue[700],
+                                      fontFamily: 'Inder',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Icon(Icons.arrow_forward,
+                                      color: Colors.blue[700]),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
                       }
 
-                      return Column(
-                        children: [
-                          CarouselSlider.builder(
-                            itemCount: item.length,
-                            options: CarouselOptions(
-                              viewportFraction: 0.8,
-                              initialPage: item.indexWhere((element) =>
-                              element['Day'] ==
-                                  newFormat.format(DateTime.now())),
-                              aspectRatio: 6.5 / 3,
-                              enableInfiniteScroll: false,
-                              reverse: false,
-                              autoPlay: false,
-                              enlargeCenterPage: true,
-                              scrollDirection: Axis.horizontal,
-                            ),
-                            itemBuilder: (BuildContext context, int index) {
-                              return Card(
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DevotionalWidget(
-                                                    title: 'Devotional',
-                                                    day: item[index]['Day'],
-                                                  )));
-                                    });
-                                  },
-                                  child: devotionalCarousel(index, item),
-                                ),
-                              );
-                            },
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AllDevotionals()));
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'See all devotionals',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.blue[700],
-                                    fontFamily: 'Inder',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                Icon(Icons.arrow_forward,
-                                    color: Colors.blue[700]),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
                     },
                   ),
                   SizedBox(height: 16),
@@ -450,21 +514,53 @@ class _HomePageState extends State<HomePage> {
                           break;
                       }
 
-                      final item = snapshot.data;
+                      List<Map<String, dynamic>> item = snapshot.data;
 
-                      return Card(
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BibleStudyPage()));
-                            });
-                          },
-                          child: bibleStudyCarousel(item[0]),
-                        ),
-                      );
+                      if (item.isNotEmpty) {
+                          return Card(
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => BibleStudyPage()));
+                                });
+                              },
+                              child: bibleStudyCarousel(item[0])
+                            ),
+                          );
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 150,
+                            child: Card(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => BibleStudyPage()));
+                                  });
+                                },
+                                child: Center(
+                                  child: Text(
+                                    'No Bible Study Available',
+                                    style: TextStyle(
+                                      fontFamily: 'Inder',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                     },
                   ),
                   SizedBox(height: 16),
@@ -497,52 +593,75 @@ class _HomePageState extends State<HomePage> {
                         // TODO: Handle this case.
                           break;
                       }
-                      final item = snapshot.data[0];
 
-                      return Card(
-                        child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            DevotionalWidget()));
-                              });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(16),
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width,
-                              constraints: BoxConstraints(
-                                minHeight: 200,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/resurrection.png',
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: EmptyWidget(
+                            image: null,
+                            packageImage: PackageImage.Image_1,
+                            title: 'No Devotional',
+                            subTitle: 'Unable to get today\'s devotional',
+                            titleTextStyle: TextStyle(
+                              fontSize: 22,
+                              color: Color(0xff9da9c7),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            subtitleTextStyle: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xffabb8d6),
+                            ),
+                          ),
+                        );
+                      } else {
+                        List<Map<String, dynamic>> item = snapshot.data;
+
+                        return Card(
+                          child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DevotionalWidget()));
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(16),
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width,
+                                constraints: BoxConstraints(
+                                  minHeight: 200,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                        'assets/images/resurrection.png',
+                                      ),
+                                      fit: BoxFit.cover,
+                                      colorFilter: ColorFilter.mode(
+                                          Color(0x90000000), BlendMode.darken)),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    (item.isNotEmpty) ? item[0]['reflection'] : 'No Reflection',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Inder',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    fit: BoxFit.cover,
-                                    colorFilter: ColorFilter.mode(
-                                        Color(0x90000000), BlendMode.darken)),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  item['reflection'],
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Inder',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
-                            )),
-                      );
+                              )),
+                        );
+                      }
+
+
                     },
                   ),
                   SizedBox(height: 16),

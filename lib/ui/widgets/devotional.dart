@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:devotional/db/database_helper.dart';
 import 'package:devotional/models/devotional_model.dart';
+import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
@@ -83,7 +84,23 @@ class _DevotionalWidgetState extends State<DevotionalWidget> {
             // Completed with error
 
               if (snapshot.hasError) {
-                return Container(child: Text(snapshot.error.toString()));
+                return Center(
+                  child: EmptyWidget(
+                    image: null,
+                    packageImage: PackageImage.Image_1,
+                    title: 'No Devotional',
+                    subTitle: 'Unable to get today\'s devotional',
+                    titleTextStyle: TextStyle(
+                      fontSize: 22,
+                      color: Color(0xff9da9c7),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    subtitleTextStyle: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xffabb8d6),
+                    ),
+                  ),
+                );
               } else {
                 var dev = snapshot.data;
                 String day = DateFormat.yMMMEd().format(dev.day);
